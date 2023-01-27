@@ -93,6 +93,7 @@ exports.signin = async (req, res) => {
             userID: user.userID,
             email: user.email,
             bio : user.bio,
+            posts : user.posts,
             accessToken: token
         }
     })

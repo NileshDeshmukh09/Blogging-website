@@ -21,7 +21,7 @@ mongoose.connect(process.env.DB_URL, ()=>{
 
 
 const authRouter = require('./routes/auth.route');
-const postRouter = require('./routes/post.routes');
+const postRouter = require('./routes/blogpost.routes');
 
 app.use( '/blog/api/v1' , authRouter );
 app.use( '/blog/api/v1' , postRouter );
