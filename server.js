@@ -21,8 +21,10 @@ mongoose.connect(process.env.DB_URL, ()=>{
 
 
 const authRouter = require('./routes/auth.route');
+const postRouter = require('./routes/post.routes');
 
 app.use( '/blog/api/v1' , authRouter );
+app.use( '/blog/api/v1' , postRouter );
 
 app.listen(process.env.PORT, () => {
     console.log(`Blogging-website server has started on the port http://localhost:${ process.env.PORT }` );

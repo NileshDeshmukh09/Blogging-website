@@ -32,7 +32,14 @@ const userSchema = mongoose.Schema({
     bio : {
         type : String , 
         default : "Hey , I'm there on Blogging",
-    }
+    },
+
+    posts : { 
+        type: [mongoose.SchemaTypes.ObjectId], 
+        ref: 'Post'  /* Collection Name */
+        /* One to Many Relationship between the Ticket's and the User */
+
+    },
 
 
 });
