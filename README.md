@@ -1,5 +1,7 @@
 #  Blogging-website
 
+### PREVIEW VIDEO : https://www.loom.com/share/0ee1d6eadbf24fc88e802968cde638e5
+
 ## SETUP
 
 To get started and run the app:
