@@ -27,6 +27,7 @@ exports.createBlogpost = async (req, res) => {
             await user.save();
 
             return res.status(201).send({
+                success : true,
                 message: "Post , created Successfully !",
                 Post: response.postResponse(post)
             })
@@ -37,6 +38,7 @@ exports.createBlogpost = async (req, res) => {
         console.log(error);
         return res.status(400).send({
             status: 400,
+            success : false,
             message: error.message
         })
     }
@@ -45,6 +47,31 @@ exports.createBlogpost = async (req, res) => {
 
 /* API to fetch all the Posts */
 exports.getAllPosts = async (req, res) => {
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
+    const posts = await Post.find().skip(skip).limit(limit);
+    const count = await Post.count();
+
+    if (posts == null) {
+        return res.status(200).send({
+            message: `No Posts Found !`
+        })
+    }
+
+    return res.status(200).send({
+        success : true ,
+        totalPages: Math.ceil(count / limit),
+        posts: response.postListResponse(posts)
+    });
+
+}
+
+
+/* API to fetch all the Posts of Authenticated user   */
+exports.getAllPostsOfUserID = async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
@@ -77,7 +104,7 @@ exports.getOnePost = async (req, res) => {
         _id: req.params.id
     });
 
-    res.status(200).send({
+    return res.status(200).send({
         success: true,
         message: "Post get successfully !",
         Post: response.postResponse(post)
@@ -100,7 +127,7 @@ exports.deletePost = async ( req , res ) => {
 
         await blog.remove();
 
-        res.status(200).send({
+        return res.status(200).send({
             success: true,
             message: ` Blogpost Deleted Successfully`,
             blog : blog
@@ -110,7 +137,7 @@ exports.deletePost = async ( req , res ) => {
     }catch( err ){
 
         console.log( err );
-        res.status(400).send({
+        returnres.status(400).send({
             success: true,
             message: err.message ,
         });
@@ -161,7 +188,7 @@ exports.updateBlog = async ( req , res )=> {
          return res.status(200).send({
             success : true,
             message: "blog Updated successfully !",
-            blog: responseConvertor.postResponse (updatedblog)
+            blog: response.postResponse (updatedblog)
          })
 
     }catch( error ){
@@ -169,7 +196,7 @@ exports.updateBlog = async ( req , res )=> {
         console.error(error);
         return res.status(500).send({
             success : true,
-            message : 'Internal Server Error ',
+            message : error.message,
         });
     }
 }

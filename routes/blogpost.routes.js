@@ -6,13 +6,20 @@ const {  JWTAuth } = require("../middlewares");
 // create a new post
 router.post('/posts', [JWTAuth.verifyToken ], postController.createBlogpost );
 
-// Get All Post
-router.get('/posts', [JWTAuth.verifyToken ], postController.getAllPosts);
+// GET ALL POST
+router.get('/posts',  postController.getAllPosts);
 
-// GET-ONE-POST
+// GET ALL BLOG-POST BY  AUTHENTICATED USER
+router.get('/posts', [JWTAuth.verifyToken ], postController.getAllPostsOfUserID);
+
+// GET-ONE-BLOG-POST
 router.get('/posts/:id', [JWTAuth.verifyToken] , postController.getOnePost);
 
-// DELETE
+// UPDATE BLOG-POST
+router.put('/posts/:id', [JWTAuth.verifyToken ], postController.updateBlog );
+
+
+// DELETE BLOG-POST
 router.delete('/posts/:id', [JWTAuth.verifyToken ], postController.deletePost );
 
 module.exports = router 
