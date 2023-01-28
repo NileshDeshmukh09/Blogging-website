@@ -52,6 +52,8 @@ exports.getAllPosts = async (req, res) => {
     const limit = 10;
     const skip = (page - 1) * limit;
 
+    console.log("Home routes");
+
     const posts = await Post.find().skip(skip).limit(limit);
     const count = await Post.count();
 
@@ -76,6 +78,8 @@ exports.getAllPostsOfUserID = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const skip = (page - 1) * limit;
+
+    console.log( "userID", req.userID );
 
     const posts = await Post.find({ author: req.userID }).skip(skip).limit(limit);
     const count = await Post.count();

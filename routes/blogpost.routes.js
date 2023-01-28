@@ -6,8 +6,6 @@ const {  JWTAuth } = require("../middlewares");
 // create a new post
 router.post('/posts', [JWTAuth.verifyToken ], postController.createBlogpost );
 
-// GET ALL POST
-router.get('/posts',  postController.getAllPosts);
 
 // GET ALL BLOG-POST BY  AUTHENTICATED USER
 router.get('/posts', [JWTAuth.verifyToken ], postController.getAllPostsOfUserID);
